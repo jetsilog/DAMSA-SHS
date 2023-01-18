@@ -49,7 +49,7 @@
       <div class="mt-top-bar row">
         <div class="col-md-5">
           <h1 class="logo">
-            <a href="index.html">DAMSA<span>COLLEGE</span></a>
+            <a href="index.html">DAMSA<span>SHS</span></a>
           </h1>
         </div>
         <div class="col-md-5 pull-right">
