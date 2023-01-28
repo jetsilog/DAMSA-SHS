@@ -24,7 +24,8 @@ if ($rows) {
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Faculty ID</label>
-      <input type="text" class="form-control" name="FacultyID" value="<?php echo $rows['FacultyID']; ?>">
+      <input type="text" class="form-control" name="FacultyID" id="facultyIDupdate" value="<?php echo $rows['FacultyID']; ?>" oninput="checkfidupdate()">
+      <span id="check-facultyupdate"></span>
     </div>
     <div class="form-group col-md-6">
       <label for="inputEmail4">Last Name</label>

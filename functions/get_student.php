@@ -23,8 +23,10 @@ if ($rows) {
   <br>
   <div class="form-row">
     <div class="form-group col-md-3">
+
       <label for="inputEmail4">LRN</label>
-      <input type="text" class="form-control" name="IDnum" value="<?php echo $rows['StudentID']; ?>">
+      <input type="text" class="form-control" name="IDnum" id="IDnumupdate" value="<?php echo $rows['StudentID']; ?>" oninput="editlrn()">
+      <span id="check-lrnupdate"></span>
     </div>
     <div class="form-group col-md-3">
       <label for="inputEmail4">Last Name</label>

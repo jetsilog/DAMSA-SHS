@@ -24,6 +24,8 @@ if (isset($_POST['submit'])) {
     date_default_timezone_set('Asia/Singapore');
     $datentime = date("Y-m-d h:i:sa");
 
+
+
     if (empty($_FILES['files']['tmp_name'])) {
         $query = mysqli_query($conn, "UPDATE students SET StudentID='$StudentNum', LastName='$LastName', FirstName='$FirstName', MiddleName='$MiddleName', Suffix='$suffix', Age=$Age, Sex='$Sex', Birthday='$Bday', Address='$Address', ContactNum='$ContactNum', Guardian='$Guardian', GuardianContact='$Gcnum', GradeLevel=$Gradelvl, TrackID=$Track, StrandID=$Strand, email='$email' WHERE ID='$id'");
 
@@ -43,6 +45,7 @@ if (isset($_POST['submit'])) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         if (strpos(finfo_file($finfo, $_FILES['files']['tmp_name']), "image") === 0) {
             $imgData = addslashes(file_get_contents($_FILES['files']['tmp_name']));
+
 
             $query = mysqli_query($conn, "UPDATE students SET StudentID='$StudentNum', LastName='$LastName', FirstName='$FirstName', MiddleName='$MiddleName', Suffix='$suffix', Age=$Age, Sex='$Sex', Birthday='$Bday', Address='$Address', ContactNum='$ContactNum', Guardian='$Guardian', GuardianContact='$Gcnum', GradeLevel=$Gradelvl, TrackID=$Track, StrandID=$Strand, email='$email', Image='{$imgData}' WHERE ID='$id'");
 

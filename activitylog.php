@@ -31,171 +31,203 @@
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Activity Log</h1>
+
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Home</li>
               <li class="breadcrumb-item active" aria-current="page">Activity Log</li>
             </ol>
           </div>
-
-          <!-- Row -->
-          <div class="row">
-            <!-- Datatables -->
-
-            <!-- DataTable with Hover -->
-            <div class="col-lg-12">
-              <div class="card mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">List of Activity</h6>
-
+          <form action="" method="GET">
+            <!-- Row -->
+            <div class="row">
+              <!-- Datatables -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">From date</label>
+                  <input type="date" class="form-control" name="fromdate" value="<?php if (isset($_GET['fromdate'])) {
+                                                                                    echo $_GET['fromdate'];
+                                                                                  } ?>">
                 </div>
-                <div class="table-responsive p-3">
-                  <table class="table align-items-center table-flush table-hover" id="dataTableHover">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>AccountName</th>
-                        <th>Date&Time</th>
-                        <th>Activity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php $query = mysqli_query($conn, "SELECT * FROM activitylog");
-                      while ($rows = mysqli_fetch_array($query)) {
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">To date</label>
+                  <input type="date" class="form-control" name="todate" value="<?php if (isset($_GET['todate'])) {
+                                                                                  echo $_GET['todate'];
+                                                                                } ?>">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="">Click to filter:</label> <br>
+                  <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+              </div>
+
+          </form>
+          <!-- DataTable with Hover -->
+          <div class="col-lg-12">
+            <div class="card mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">List of Activity</h6>
+
+              </div>
+              <div class="table-responsive p-3">
+                <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>AccountName</th>
+                      <th>Date&Time</th>
+                      <th>Activity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php if (isset($_GET['fromdate']) && isset($_GET['fromdate'])) {
+                      $from_date = $_GET['fromdate'];
+                      $to_date = $_GET['todate'];
+                    ?>
+                      <?php $query = mysqli_query($conn, "SELECT * FROM activitylog WHERE DateTIme BETWEEN '$from_date' AND '$to_date'");
+                      if (mysqli_num_rows($query) > 0) {
+                        foreach ($query as $rows) {
                       ?>
-                        <tr>
-                          <td><?php echo $rows['AccountName']; ?></td>
-                          <td><?php echo $rows['DateTime']; ?></td>
-                          <td><?php echo $rows['Activity']; ?></td>
+                          <tr>
+                            <td><?php echo $rows['AccountName']; ?></td>
+                            <td><?php echo $rows['DateTime']; ?></td>
+                            <td><?php echo $rows['Activity']; ?></td>
 
-                        </tr>
+                          </tr>
+                        <?php } ?>
                       <?php  } ?>
-                    </tbody>
-                  </table>
-                </div>
+
+                    <?php } ?>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-          <!--Row-->
+        </div>
+        <!--Row-->
 
-          <div class="modal fade" id="addSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add S.Y</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+        <div class="modal fade" id="addSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add S.Y</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="functions/add_Sy.php" method="POST">
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">School Year</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="SY" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Semester</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="Semester" required>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" name="submit">Save</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="modal fade" id="DeleteSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete School Year</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="functions/delete_SY.php" method="POST">
                 <div class="modal-body">
-                  <form action="functions/add_Sy.php" method="POST">
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">School Year</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="SY" required>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-4 col-form-label">Semester</label>
-                      <div class="col-sm-8">
-                        <input type="text" class="form-control" name="Semester" required>
-                      </div>
-                    </div>
+                  <p>Do you really want to delete this record?</p>
+                  <input type="hidden" name="id" id="zid">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+                  <button type="submit" class="btn btn-danger" name="submit">Yes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="Deleteerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Oopps!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="functions/delete_track.php" method="POST">
+                <div class="modal-body">
+                  <p>Sorry this School Year is still active.</p>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Okay</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="editSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit School Year</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="functions/edit_SY.php" method="POST">
+                <div class="modal-body">
+                  <div id='result'></div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" name="submit">Save</button>
                 </div>
-                </form>
-              </div>
+              </form>
             </div>
           </div>
-
-
-
-
-
-
-
-          <div class="modal fade" id="DeleteSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delete School Year</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form action="functions/delete_SY.php" method="POST">
-                  <div class="modal-body">
-                    <p>Do you really want to delete this record?</p>
-                    <input type="hidden" name="id" id="zid">
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-danger" name="submit">Yes</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-
-
-
-          <div class="modal fade" id="Deleteerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Oopps!</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form action="functions/delete_track.php" method="POST">
-                  <div class="modal-body">
-                    <p>Sorry this School Year is still active.</p>
-
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Okay</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-
-
-
-          <div class="modal fade" id="editSY" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Edit School Year</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form action="functions/edit_SY.php" method="POST">
-                  <div class="modal-body">
-                    <div id='result'></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Save</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
         </div>
-        <!---Container Fluid-->
+
       </div>
-
-      <!-- Footer -->
-
-      <!-- Footer -->
+      <!---Container Fluid-->
     </div>
+
+    <!-- Footer -->
+
+    <!-- Footer -->
+  </div>
   </div>
 
   <!-- Scroll to top -->

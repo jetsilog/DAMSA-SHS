@@ -117,7 +117,8 @@
                     <div class="form-row">
                       <div class="form-group col-md-3">
                         <label for="inputEmail4">LRN</label>
-                        <input type="text" class="form-control" name="IDnum" maxlength="11" required>
+                        <input type="text" class="form-control" name="IDnum" id="IDnum" maxlength="11" required oninput="checklrn()">
+                        <span id="check-lrn"></span>
                       </div>
                       <div class="form-group col-md-3">
                         <label for="inputEmail4">Last Name</label>
@@ -226,7 +227,7 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Save</button>
+                    <button type="submit" class="btn btn-primary" name="submit" id="submit">Save</button>
                   </div>
                 </form>
               </div>
@@ -278,7 +279,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Save</button>
+                    <button type="submit" class="btn btn-primary" name="submit" id="submitedit">Save</button>
                   </div>
                 </form>
               </div>
@@ -379,6 +380,34 @@
     });
   </script>
 
+
+  <script>
+    function checklrn() {
+      jQuery.ajax({
+        url: "functions/checklrn.php",
+        data: 'IDnum=' + $("#IDnum").val(),
+        type: "POST",
+        success: function(data) {
+          $('#check-lrn').html(data);
+        },
+        error: function() {}
+      });
+    }
+  </script>
+
+  <script>
+    function editlrn() {
+      jQuery.ajax({
+        url: "functions/checklrnonupdate.php",
+        data: 'IDnumupdate=' + $("#IDnumupdate").val(),
+        type: "POST",
+        success: function(data) {
+          $('#check-lrnupdate').html(data);
+        },
+        error: function() {}
+      });
+    }
+  </script>
 
 </body>
 

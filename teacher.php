@@ -123,7 +123,8 @@
                     <div class="form-row">
                       <div class="form-group col-md-4">
                         <label for="inputEmail4">Faculty ID</label>
-                        <input type="text" class="form-control" name="FacultyID" required maxlength="12">
+                        <input type="text" class="form-control" name="FacultyID" id="facultyID" required maxlength="12" oninput="checkfid()">
+                        <span id="check-faculty"></span>
                       </div>
                       <div class="form-group col-md-4">
                         <label for="inputEmail4">Last Name</label>
@@ -179,7 +180,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Save</button>
+                    <button type="submit" class="btn btn-primary" name="submit" id="facultysubmit">Save</button>
                   </div>
                 </form>
               </div>
@@ -285,6 +286,36 @@
     function deletexid(z) {
       document.getElementById("zid").value = z;
 
+    }
+  </script>
+
+
+
+  <script>
+    function checkfid() {
+      jQuery.ajax({
+        url: "functions/checkfacultyid.php",
+        data: 'facultyID=' + $("#facultyID").val(),
+        type: "POST",
+        success: function(data) {
+          $('#check-faculty').html(data);
+        },
+        error: function() {}
+      });
+    }
+  </script>
+
+  <script>
+    function checkfidupdate() {
+      jQuery.ajax({
+        url: "functions/checkfacultyid_update.php",
+        data: 'facultyIDupdate=' + $("#facultyIDupdate").val(),
+        type: "POST",
+        success: function(data) {
+          $('#check-facultyupdate').html(data);
+        },
+        error: function() {}
+      });
     }
   </script>
 </body>

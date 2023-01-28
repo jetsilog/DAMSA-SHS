@@ -95,7 +95,7 @@
                     <?php $querycheckenlist = mysqli_query($conn, "SELECT * FROM enlistment WHERE Stud_ID='$username' AND Schoolyear='$SYID'");
                     $countenlist = mysqli_num_rows($querycheckenlist);
                     if ($countenlist > 0) {
-                    ?><button type="submit" class="btn btn-primary" name="submit" disabled>Submit</button>
+                    ?><span style="font-size:20px"><b> You have successfully enlisted. </b></span>
                     <?php } else { ?>
                       <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                     <?php } ?>
