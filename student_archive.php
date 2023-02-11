@@ -34,7 +34,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Home</li>
               <li class="breadcrumb-item">Files</li>
-              <li class="breadcrumb-item active" aria-current="page">Students</li>
+              <li class="breadcrumb-item active" aria-current="page">Students Archive</li>
             </ol>
           </div>
 
@@ -46,8 +46,8 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Students</h6>
-                  <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#addStudent">Add Student</button>
+                  <h6 class="m-0 font-weight-bold text-primary">Student list</h6>
+
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -56,8 +56,9 @@
                         <th>Student_Image</th>
                         <th>LRN</th>
                         <th>Name</th>
+                        <th>View</th>
 
-                        <th>View&Edit</th>
+                        <th>Restore</th>
                         <?php if ($usertype == 'Co-admin') { ?>
 
 
@@ -68,7 +69,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php $query = mysqli_query($conn, "SELECT * FROM students INNER JOIN track ON students.TrackID=track.TrackID INNER JOIN strand ON students.StrandID=strand.StrandID WHERE students.Standing='Existing' AND students.archive_status='safe'");
+                      <?php $query = mysqli_query($conn, "SELECT * FROM students INNER JOIN track ON students.TrackID=track.TrackID INNER JOIN strand ON students.StrandID=strand.StrandID WHERE students.Standing='Existing' AND students.archive_status='archived'");
                       while ($rows = mysqli_fetch_array($query)) {
                       ?>
                         <tr align="center">
@@ -84,9 +85,9 @@
                           <?php $studentfullname = $rows['LastName'] . ', ' . $rows['FirstName'] . $rows['MiddleName']; ?>
                           <td><?= $studentfullname; ?></td>
 
-
-
                           <td><a data-toggle="modal" data-target="#editStudent" onclick="editxid(<?php echo $rows['0']; ?>)"><i class="fa fa-eye"></i></a></td>
+
+                          <td><a data-toggle="modal" data-target="#restore" onclick="restore(<?php echo $rows['0']; ?>)"><i class="fa fa-history"></i></a></td>
                           <?php if ($usertype == 'Co-admin') { ?>
 
                           <?php } else { ?>
@@ -238,6 +239,28 @@
 
 
 
+          <div class="modal fade" id="restore" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Restore record</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="functions/restore_student.php" method="POST">
+                  <div class="modal-body">
+                    <p>Do you really want to restore this record?</p>
+                    <input type="hidden" name="id" id="zidd">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger" name="submit">Yes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
 
           <div class="modal fade" id="DeleteStudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -249,7 +272,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form action="functions/archive_student.php" method="POST">
+                <form action="functions/delete_student.php" method="POST">
                   <div class="modal-body">
                     <p>Do you really want to delete this record?</p>
                     <input type="hidden" name="id" id="zid">
@@ -268,7 +291,7 @@
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">View/Edit Student</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">View</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -279,7 +302,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="submit" id="submitedit">Save</button>
+
                   </div>
                 </form>
               </div>
@@ -324,6 +347,14 @@
         function(data) {
           $('#result').html(data);
         });
+    }
+  </script>
+
+
+  <script>
+    function restore(j) {
+      document.getElementById("zidd").value = j;
+
     }
   </script>
 

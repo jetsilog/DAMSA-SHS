@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="img/logo/damsashs.jpg" rel="icon">
-  <title>Faculty</title>
+  <title>Faculty Archive</title>
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="css/ruang-admin.min.css" rel="stylesheet">
@@ -30,11 +30,11 @@
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Faculty</h1>
+            <h1 class="h3 mb-0 text-gray-800">Faculty Archive</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Home</li>
               <li class="breadcrumb-item">Files</li>
-              <li class="breadcrumb-item active" aria-current="page">Faculty</li>
+              <li class="breadcrumb-item active" aria-current="page">Faculty Archive</li>
             </ol>
           </div>
 
@@ -47,7 +47,7 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Details</h6>
-                  <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#addteacher">Add Teacher</button>
+
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -61,7 +61,7 @@
                         <th>Email</th>
                         <th>Contact</th>
                         <th>Address</th>
-                        <th>Edit</th>
+                        <th>Restore</th>
                         <?php if ($usertype == 'Co-admin') { ?>
 
 
@@ -71,7 +71,7 @@
                       </tr>
                     </thead>
                     <tbody align="center">
-                      <?php $query = mysqli_query($conn, "SELECT * FROM faculty WHERE farchive_status='safe'");
+                      <?php $query = mysqli_query($conn, "SELECT * FROM faculty WHERE farchive_status='archived'");
                       while ($rows = mysqli_fetch_array($query)) {
                       ?>
                         <tr>
@@ -91,7 +91,7 @@
                           <td><?php echo $rows['Email']; ?></td>
                           <td><?php echo $rows['Contact']; ?></td>
                           <td><?php echo $rows['Address']; ?></td>
-                          <td><a data-toggle="modal" data-target="#editFaculty" onclick="editxid(<?php echo $rows['ID']; ?>)"><i class="fa fa-edit"></i></a></td>
+                          <td><a data-toggle="modal" data-target="#restoref" onclick="restoref(<?php echo $rows['ID']; ?>)"><i class="fa fa-history"></i></a></td>
                           <?php if ($usertype == 'Co-admin') { ?>
 
                           <?php } else { ?>
@@ -195,6 +195,28 @@
 
 
 
+          <div class="modal fade" id="restoref" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Restore</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="functions/restore_faculty.php" method="POST">
+                  <div class="modal-body">
+                    <p>Do you really want to restore this record?</p>
+                    <input type="hidden" name="id" id="zidd">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger" name="submit">Yes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
 
           <div class="modal fade" id="DeleteFaculty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -206,7 +228,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <form action="functions/archive_faculty.php" method="POST">
+                <form action="functions/delete_faculty.php" method="POST">
                   <div class="modal-body">
                     <p>Do you really want to delete this record?</p>
                     <input type="hidden" name="id" id="zid">
@@ -295,7 +317,12 @@
     }
   </script>
 
+  <script type="text/javascript">
+    function restoref(j) {
+      document.getElementById("zidd").value = j;
 
+    }
+  </script>
 
   <script>
     function checkfid() {

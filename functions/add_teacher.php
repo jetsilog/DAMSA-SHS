@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
         $imgData = addslashes(file_get_contents($_FILES['files']['tmp_name']));
 
 
-        $query = mysqli_query($conn, "INSERT INTO faculty (FacultyID, LastName, FirstName, MiddleName, F_Suffix,Position, Contact, Address, Image, Email) VALUES ('$FacultyID', '$Lastname', '$Firstname', '$Middlename', '$suffix','$position', '$Contact','$Address', '{$imgData}', '$email')");
+        $query = mysqli_query($conn, "INSERT INTO faculty (FacultyID, LastName, FirstName, MiddleName, F_Suffix,Position, Contact, Address, Image, Email,farchive_status) VALUES ('$FacultyID', '$Lastname', '$Firstname', '$Middlename', '$suffix','$position', '$Contact','$Address', '{$imgData}', '$email','safe')");
         $fullname = $Firstname . ' ' . $Lastname;
         $query2 = mysqli_query($conn, "INSERT INTO accounts (Username, Password, Name, AccountType,fb_link_status,google_status) VALUES ('$FacultyID', '$encryptedpass', '$fullname', 'Faculty','0','0')");
         if ($query && $query2) {
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
             header("location: ../teacher.php");
         }
     } else {
-        $query = mysqli_query($conn, "INSERT INTO faculty (FacultyID, LastName, FirstName, MiddleName, F_Suffix,Position, Contact, Address, Email) VALUES ('$FacultyID', '$Lastname', '$Firstname', '$Middlename', '$suffix','$position', '$Contact','$Address','$email')");
+        $query = mysqli_query($conn, "INSERT INTO faculty (FacultyID, LastName, FirstName, MiddleName, F_Suffix,Position, Contact, Address, Email,farchive_status) VALUES ('$FacultyID', '$Lastname', '$Firstname', '$Middlename', '$suffix','$position', '$Contact','$Address','$email','safe')");
         $fullname = $Firstname . ' ' . $Lastname;
         $query2 = mysqli_query($conn, "INSERT INTO accounts (Username, Password, Name, AccountType,fb_link_status,google_status) VALUES ('$FacultyID', '$encryptedpass', '$fullname', 'Faculty','0','0')");
         if ($query && $query2) {

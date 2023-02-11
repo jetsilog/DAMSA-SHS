@@ -49,17 +49,19 @@
       <div class="mt-top-bar row">
         <div class="col-md-5">
           <h1 class="logo">
-            <a href="index.html">DAMSA<span> SHS</span></a>
+            <a href="index.html">DAMSA<span>SHS</span></a>
           </h1>
         </div>
         <div class="col-md-5 pull-right">
           <div class="nav_search_holder">
-            <div id="trend-search" class="trend-search">
+            <div class="trend-search">
+              <span style="font-weight:bold;text-decoration:none;"><a href="login.php">LOGIN</a></span>
               <form action="search.html">
                 <input class="trend-search-input" placeholder="Enter your search term..." type="search" value="" name="search" id="search" hidden>
                 <input class="trend-search-submit" type="submit" value="">
 
               </form>
+
             </div>
           </div>
         </div>
@@ -95,6 +97,7 @@
             <li class="item"><a href="#contacts">Contacts</a></li>
             <li class="item"><a href="newstudent.php">Apply Now</a></li>
             <li class="item"><a href="login.php">Login</a></li>
+
           </ul>
         </div>
       </div>

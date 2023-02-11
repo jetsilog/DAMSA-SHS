@@ -77,7 +77,21 @@ if ($rows) {
 
   <div class="form-group">
     <label for="inputEmail4">Position</label>
-    <input type="text" class="form-control" name="position" value="<?php echo $rows['Position']; ?>">
+
+
+    <select name="position" class="form-control">
+      <?php $pos = $rows['Position']; ?>
+      <option value="">Please Select Gender</option>
+      <option value="Teacher II" <?php if ($pos == "Teacher II") {
+                                    echo "Selected";
+                                  }  ?>>Teacher II</option>
+      <option value="Teacher III" <?php if ($pos == "Teacher III") {
+                                    echo "Selected";
+                                  }  ?>>Teacher III</option>
+      <option value="Master Teacher I" <?php if ($pos == "Master Teacher I") {
+                                          echo "Selected";
+                                        }  ?>>Master Teacher I</option>
+    </select>
   </div>
 
 

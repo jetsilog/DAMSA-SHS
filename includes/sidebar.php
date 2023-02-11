@@ -129,6 +129,22 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#archive" aria-expanded="true" aria-controls="collapseForm">
+      <i class="fa fa-archive"></i>
+      <span>Archive</span>
+    </a>
+    <div id="archive" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="student_archive.php">Student Archive</a>
+        <a class="collapse-item" href="faculty_archive.php">Faculty Archive</a>
+
+
+
+      </div>
+    </div>
+  </li>
+
 <?php } else if ($usertype == 'Student') { ?>
   <div class="sidebar-brand-text mx-3"><?php echo $usertype; ?></div>
   </a>

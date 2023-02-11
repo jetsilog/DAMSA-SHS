@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
     if (strpos(finfo_file($finfo, $_FILES['files']['tmp_name']), "image") === 0) {
         $imgData = addslashes(file_get_contents($_FILES['files']['tmp_name']));
 
-        $query = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, Address, ContactNum, Guardian, GuardianContact, GradeLevel, TrackID, StrandID, Image,Standing,email) VALUES ('$StudentNum','$LastName','$FirstName','$MiddleName','$suffix',$Age,'$Sex','$Bday','$Address','$ContactNum','$Guardian','$Gcnum',$Gradelvl,$Track,$Strand, '{$imgData}','Existing','$email')");
+        $query = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, Address, ContactNum, Guardian, GuardianContact, GradeLevel, TrackID, StrandID, Image,Standing,email,archive_status) VALUES ('$StudentNum','$LastName','$FirstName','$MiddleName','$suffix',$Age,'$Sex','$Bday','$Address','$ContactNum','$Guardian','$Gcnum',$Gradelvl,$Track,$Strand, '{$imgData}','Existing','$email','safe')");
         $accname = $FirstName . ' ' . $LastName;
         $query2 = mysqli_query($conn, "INSERT INTO accounts (Username, Password, Name, AccountType,fb_link_status,google_status) VALUES ('$StudentNum', '$mypass', '$accname', 'Student','0','0')");
         if ($query && $query2) {
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
             header("location: ../studentprof.php");
         }
     } else {
-        $query = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, Address, ContactNum, Guardian, GuardianContact, GradeLevel, TrackID, StrandID, Standing,email) VALUES ('$StudentNum','$LastName','$FirstName','$MiddleName','$suffix',$Age,'$Sex','$Bday','$Address','$ContactNum','$Guardian','$Gcnum',$Gradelvl,$Track,$Strand,'Existing','$email')");
+        $query = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, Address, ContactNum, Guardian, GuardianContact, GradeLevel, TrackID, StrandID, Standing,email,archive_status) VALUES ('$StudentNum','$LastName','$FirstName','$MiddleName','$suffix',$Age,'$Sex','$Bday','$Address','$ContactNum','$Guardian','$Gcnum',$Gradelvl,$Track,$Strand,'Existing','$email','safe')");
         $accname = $FirstName . ' ' . $LastName;
         $query2 = mysqli_query($conn, "INSERT INTO accounts (Username, Password, Name, AccountType, fb_link_status,google_status) VALUES ('$StudentNum', '$mypass', '$accname', 'Student','0','0')");
         if ($query && $query2) {
