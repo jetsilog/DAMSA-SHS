@@ -35,24 +35,7 @@ if (isset($_POST['submit'])) {
 
 
   $_SESSION['nSlrn'] = $LRN;
-  $finfo = finfo_open(FILEINFO_MIME_TYPE);
-  if (strpos(finfo_file($finfo, $_FILES['files']['tmp_name']), "image") === 0) {
-    $imgData = addslashes(file_get_contents($_FILES['files']['tmp_name']));
-
-    $newquery = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, GradeLevel, TrackID, StrandID, Image, Standing, email) VALUES ('$LRN','$StudLname','$StudFname','$StudMName','$Studsuffix',$StudAge,'$StudSex','$StudBday',$StudGradelvl,$StudTrack,$StudStrand, '{$imgData}','New','$email')");
-    if ($newquery) {
-
-      $_SESSION['status'] = "Submitted";
-      $_SESSION['text'] = "Fill out the next page";
-      $_SESSION['status_code'] = "success";
-      header("location: ../studcard.php");
-    } else {
-      $_SESSION['status'] = "Can't Submit";
-      $_SESSION['text'] = "Something went wrong";
-      $_SESSION['status_code'] = "error";
-      header("location: ../newstudent.php");
-    }
-  } else {
+  if (empty($_FILES['files']['tmp_name'])) {
     $newquery = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, GradeLevel, TrackID, StrandID, Standing, email) VALUES ('$LRN','$StudLname','$StudFname','$StudMName','$Studsuffix',$StudAge,'$StudSex','$StudBday',$StudGradelvl,$StudTrack,$StudStrand,'New','$email')");
     if ($newquery) {
       $_SESSION['status'] = "Submitted";
@@ -64,6 +47,25 @@ if (isset($_POST['submit'])) {
       $_SESSION['text'] = "Something went wrong";
       $_SESSION['status_code'] = "error";
       header("location: ../newstudent.php");
+    }
+  } else {
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    if (strpos(finfo_file($finfo, $_FILES['files']['tmp_name']), "image") === 0) {
+      $imgData = addslashes(file_get_contents($_FILES['files']['tmp_name']));
+
+      $newquery = mysqli_query($conn, "INSERT INTO students (StudentID, LastName, FirstName, MiddleName, Suffix, Age, Sex, Birthday, GradeLevel, TrackID, StrandID, Image, Standing, email) VALUES ('$LRN','$StudLname','$StudFname','$StudMName','$Studsuffix',$StudAge,'$StudSex','$StudBday',$StudGradelvl,$StudTrack,$StudStrand, '{$imgData}','New','$email')");
+      if ($newquery) {
+
+        $_SESSION['status'] = "Submitted";
+        $_SESSION['text'] = "Fill out the next page";
+        $_SESSION['status_code'] = "success";
+        header("location: ../studcard.php");
+      } else {
+        $_SESSION['status'] = "Can't Submit";
+        $_SESSION['text'] = "Something went wrong";
+        $_SESSION['status_code'] = "error";
+        header("location: ../newstudent.php");
+      }
     }
   }
 }

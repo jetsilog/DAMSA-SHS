@@ -104,8 +104,8 @@
   $_json = file_get_contents("http://localhost/damsashs/_apiAT.php/_getRequestAcademicTrack");
   $_data = json_decode($_json);
   ?>
-  <input type="text" value="<?= $data->TVLcounts[0]; ?>" id="_piechart" hidden>
-  <input type="text" value="<?= $_data->AcademicTrackCounts[0]; ?>" id="_piechart_AT" hidden>
+  <input type="text" value="<?= $data->TVLcounts; ?>" id="_piechart" hidden>
+  <input type="text" value="<?= $_data->AcademicTrackCounts; ?>" id="_piechart_AT" hidden>
   <div id="wrapper">
     <!-- Sidebar -->
     <?php include("includes/sidebar.php"); ?>
@@ -163,7 +163,7 @@
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Students</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
                         <?php
-                        $result = mysqli_query($conn, "SELECT count(*) as totalstud from students");
+                        $result = mysqli_query($conn, "SELECT count(*) as totalstud from students WHERE Standing='Existing'");
                         $data = mysqli_fetch_assoc($result);
 
                         echo $data['totalstud']; ?>

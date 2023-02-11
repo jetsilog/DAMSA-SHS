@@ -5,7 +5,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 var ctx = document.getElementById("myPieChart");
 var _piechart = document.getElementById("_piechart").value;
 var _piechart_AT = document.getElementById("_piechart_AT").value;
-
+console.log(_piechart,_piechart_AT);
   var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {

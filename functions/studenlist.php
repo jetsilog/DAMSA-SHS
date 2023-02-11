@@ -4,14 +4,13 @@ include("../includes/config.php");
 include("../includes/lock.php");
 if (isset($_POST['submit'])) {
   $IDnum = $_POST['IDnum'];
-  $name = $_POST['name'];
   $Track = $_POST['Track'];
   $strand = $_POST['Strand'];
   $Gradelvl = $_POST['Gradelvl'];
   date_default_timezone_set('Asia/Singapore');
   $datentime = date("Y-m-d h:i:sa");
 
-  $sqlins = mysqli_query($conn, "SELECT * FROM classes WHERE Section=");
+
 
   $query = mysqli_query($conn, "INSERT INTO enlistment (Stud_ID,Track,Strand,Grade_Level,Date_time,EStatus,Schoolyear) VALUES ('$IDnum', '$Track', '$strand','$Gradelvl','$datentime','Pending','$SYID')");
 
